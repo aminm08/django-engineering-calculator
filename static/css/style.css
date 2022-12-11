@@ -1,0 +1,100 @@
+body{
+   background-color: rgb(207, 218, 197);
+}
+
+.main-keys button{
+    width: 70px;
+    height: 70px;
+    opacity: 0.7;
+    background-color: rgb(238, 241, 182);
+    font-family: cursive;
+    border-radius: 3px 3px 7px 7px;
+    border-color: rgb(231, 229, 116);
+    position: relative;
+
+
+}
+.main-keys button:hover{
+    cursor: pointer;
+    opacity: 1;
+}
+
+.main-keys{
+    display: flex;
+   left: 0;
+
+    width: 50px;
+   float: left;
+    /*margin-top: px;*/
+    
+    
+}
+div.key{
+    margin-left: 500px;
+    margin-bottom: 50px;
+}
+.teq button{
+    display: inline-block;
+    margin-left: 50px;
+    width: 200px; 
+    height: 70px;
+    background-color: rgb(206, 203, 37);
+    border-radius: 5px ;
+    border: 2px rgb(231, 229, 116) solid;
+    margin-top: 50px;
+}
+.yy{
+    margin-left: 800px;
+    margin-top: 368px;
+    display: flex;
+    /* align-content: center;
+    text-align: center; */
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(97, 165, 253);
+    width: 140px;
+    height: 70px;
+     border-radius: 3px 3px 7px 7px;
+    border-color: rgb(62, 167, 209);
+    opacity: 0.7;
+   
+}
+.yy:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+.uu{
+    width: 33.9%;
+    background-color:rgb(214, 238, 194) ;
+    height: 60px;
+    margin-left: 503px;
+    border: 2.5px solid rgb(173, 179, 169);
+    border-radius: 10px;
+    padding: 2px 2px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+::-ms-input-placeholder {
+    margin: 50%;
+    color: blue;
+}
+@media screen and (max-width: 480px) {
+    body {
+      background-color: rgb(203, 228, 203);
+    }
+    .main-keys{
+        margin-left: 0%;
+    }
+    .uu{
+        margin-left: 1%;
+        width: 100%;
+    }
+    div.key{
+
+        margin-left: 0px;
+    }
+    .yy{
+        margin-left: 372px;
+    
+    }
+  }

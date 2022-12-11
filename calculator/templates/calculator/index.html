@@ -1,0 +1,201 @@
+{% extends '_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'engeenering calculator' %}{% endblock title %}
+
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock link %}
+
+{% block content %}
+
+
+
+    <body>
+
+    <div class="con">
+
+
+        <input placeholder="please enter any number" type="text" value="{% if result %}{{ result }}{% endif %}"
+               class="uu" name="statement" id="cal_inp" disabled>
+        {#      csrf for javascript#}
+        {% csrf_token %}
+
+        <div class="key">
+
+            <table class="main-keys">
+                <tr>
+                    <td>
+                        <button onclick="add_to_inp('√(', 'math.sqrt(')">square root</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('cos(','math.cos(')">cos</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('acos(','math.acos(')">acos</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('asin(','math.asin(')">asin</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('sin(','math.sin(')">sin</button>
+                    </td>
+                    <td>
+                        <button id="C" onclick="clear_screen()">C</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button onclick="add_to_inp('&pi;','math.pi')">&pi;</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('(','(')">(</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp(')',')')">)</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('acosh(','math.acosh(')">acosh</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('atanh(','math.atanh(')">atanh</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('-','-')">-</button>
+                    </td>
+
+
+                </tr>
+                <tr>
+                    <td>
+                        <button onclick="add_to_inp('atan(','math.atan(')">atan</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('^','**')">^</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('7','7')">7</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('8','8')">8</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('9','9')">9</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('+','+')">+</button>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <button onclick="add_to_inp('sinh(','math.sinh(')">sinh</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('tanh(','math.tanh(')">tanh</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('4','4')">4</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('5','5')">5</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('6','6')">6</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('x','*')">*</button>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td>
+                        <button onclick="add_to_inp('abs(','abs(')">abs</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('cosh(','math.cosh(')">cosh</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('1','1')">1</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('2','2')">2</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('3','3')">3</button>
+                    </td>
+
+                    <td>
+                        <button onclick="add_to_inp('/','/')">/</button>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        <button onclick="add_to_inp('log(','math.log(')">Log</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('00','00')">00</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('0','0')">0</button>
+                    </td>
+                    <td>
+                        <button onclick="add_to_inp('.','.')">.</button>
+                    </td>
+
+                </tr>
+                <td>
+            </table>
+
+        </div>
+        <div class="butt">
+            <button onclick="send_to_backend()" class="yy">=</button>
+        </div>
+
+
+    </div>
+    <div dir="rtl">
+        <ul>
+            <li>حتما از عملگر ها بین اعداد در عبارت استفاده کنید</li>
+            <li>از ^ برای توان اعداد مختلف استفاده کنید</li>
+            <li>بعد از هربار محاسبه حتما از دکمه ی C برای خالی کردن ماشین حساب استفاده کنید</li>
+        </ul>
+
+    </div>
+
+    <script language="JavaScript">
+        const c = document.getElementById('C');
+        const cal_inp = document.getElementById('cal_inp')
+        const csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value
+        const page_modal = document.getElementById('myModal');
+        var backend_data = '';
+
+
+        function clear_screen() {
+            cal_inp.value = '';
+            backend_data = '';
+            document.location.href = '{% url 'cal_index' %}';
+        }
+
+        function add_to_inp(char_user, char_backend) {
+            cal_inp.value += char_user;
+            backend_data += char_backend;
+
+        }
+
+        function send_to_backend() {
+
+            document.location.href = '{% url 'cal_index' %}';
+            document.location.href += `?statement=${backend_data}`
+
+        }
+
+
+    </script>
+
+{% endblock content %}
